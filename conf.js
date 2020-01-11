@@ -6,7 +6,7 @@ jsproxy_config({
 
   // 通过 CDN 加速常用网站的静态资源（实验中）
   static_boost: {
-    enable: false,
+    enable: true,
     ver: 62
   },
 
@@ -29,7 +29,7 @@ jsproxy_config({
     'mysite': {
       label: '当前站点',
       lines: {
-        'sakura-fish.github.io': 1,
+        [location.host]: 1,
       }
     },
     // 该节点用于加载大体积的静态资源
@@ -53,13 +53,14 @@ jsproxy_config({
   /**
    * 默认节点
    */
-  node_default: 'mysite',
+  //node_default: 'demo-hk',
+  node_default: /github\.io$/.test(location.host) ? 'demo-hk' : 'mysite',
   // node_default: /jsproxy-demo\.\w+$/.test(location.host) ? 'demo-hk' : 'mysite',
 
   /**
    * 加速节点
    */
-  node_acc: 'mysite',
+  node_acc: 'cfworker',
 
   /**
    * 静态资源 CDN 地址
